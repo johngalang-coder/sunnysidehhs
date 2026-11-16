@@ -121,7 +121,7 @@ footer a{color:var(--y)}
 <script>
 {
 const ALL=[0,1,2,3,4,5,6],WK=[1,2,3,4,5],MT=[1,2,3,4],FS=[5,6,0];
-const S={hhn:"Happy Hour NYC, checked 2026",p5:"5pm.nyc, verified happy hour, 2026",both:"5pm.nyc verified + Happy Hour NYC, 2026"};
+const S={hhn:"Happy Hour NYC, checked 2026",p5:"5pm.nyc, verified happy hour, 2026",both:"5pm.nyc verified + Happy Hour NYC, 2026",atly:"Atly listing (undated)",ig:"Lighthouse Rooftop's own Instagram post (undated)"};
 const gm=v=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(v.n+", "+v.a);
 // seat: bar = bar-only / the venue is a bar; all = bar & tables; ? = not confirmed
 const V=[
@@ -136,6 +136,9 @@ const V=[
 {n:"The Skillman",h:"Skillman Ave",a:"45-20 Skillman Ave, Sunnyside, NY 11104",g:[40.746403,-73.918193],t:[[WK,12,18]],d:"Restaurant and bar on Skillman Ave with a weekday happy hour.",food:null,seat:"?",p:[["Happy hour prices","Not posted"]],s:"hhn",x:"Atly says 4–6pm on weekdays — call ahead.",ok:"Open — checked Nov 2026"},
 {n:"Claret Wine Bar",h:"Skillman Ave",a:"46-02 Skillman Ave, Sunnyside, NY 11104",g:[40.746397,-73.917871],t:[[WK,16,18],[[6,0],14,17]],d:"Intimate wine bar with a bottle-and-food happy hour deal, weekends too.",food:1,seat:"?",p:[["Bottle of house wine + margherita pizza or cheese/charcuterie platter","$32"]],s:"p5",ok:"Open — 5pm.nyc verified, 2026"},
 {n:"Sanger Hall",h:"Skillman Ave",a:"48-20 Skillman Ave, Sunnyside, NY 11104",g:[40.74615,-73.915413],t:[[WK,16,20]],d:"Roomy bar and restaurant with a long weekday happy hour.",food:0,seat:"?",p:[["Select beers","$5"],["Rosé","$7"],["Well drinks","$8"],["Margaritas","$10"]],s:"p5",ok:"Open — 5pm.nyc verified, 2026"},
+{n:"Belo",h:"Skillman Ave",a:"48-06 Skillman Ave, Sunnyside, NY 11104",g:[40.746136,-73.915878],t:[[WK,16,19]],d:"Colorful Brazilian bar and grill with DJs, Brazilian beats and outdoor dining.",food:0,seat:"?",sn:"Outdoor dining",p:[["Happy hour drink deals","Not posted"]],s:"atly",x:"Atly also says there's a big discount for paying cash.",ok:"Open — Atly, 2026"},
+{n:"The Alcove",h:"49th St",a:"41-11 49th St, Sunnyside, NY 11104",g:[40.745889,-73.915126],t:[],d:"Cozy reclaimed-wood tapas bar known for margaritas, skirt steak skewers and chimichurri truffle fries.",food:null,seat:"?",p:[["Select items","About $2–$3 off"],["Happy hour times","Not posted"]],s:"atly",ok:"Open — reviews, 2026"},
+{n:"Lighthouse Rooftop",h:"37th St (LIC border)",a:"45-15 37th St, Long Island City, NY 11101",g:[40.743694,-73.927957],t:[],d:"Big Mexican-Japanese rooftop on the Sunnyside/LIC border with Manhattan skyline views and live performances.",food:0,seat:"?",sn:"Rooftop, outdoor & covered tables",p:[["Beer & wine","From $8"],["Cocktails","From $12"],["Bottomless (90 min): mimosas, sangria, micheladas, espresso martinis","$40"]],s:"ig",x:"Weekday happy hour; exact times aren't posted.",ok:"Open — amNY rooftop guide, summer 2026"},
 {n:"Cousin Larry's",h:"Skillman Ave",a:"49-02 Skillman Ave, Sunnyside, NY 11104",g:[40.746088,-73.915118],t:[[[1,2,3],16,19],[[4,5],14,19]],d:"Neighborhood bar with a weekly cocktail special and half-price wine bottles midweek.",food:0,seat:"?",p:[["Cocktail of the week","$6"],["Wine bottles (Tue & Wed)","50% off"]],s:"both",x:"5pm.nyc lists Mon–Fri 4–7pm; Happy Hour NYC (Oct 2026) shows Thu–Fri starting at 2pm.",ok:"Open — checked Oct 2026"}
 ];
 const C=[40.7440,-73.92292];
