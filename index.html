@@ -76,7 +76,7 @@ footer a{color:var(--y)}
     <div class="in">
       <div class="lines"><span class="bul" aria-label="7 train">7</span> 40th St · 46th St–Bliss St</div>
       <h1>Happy Hours in <span>Sunnyside</span></h1>
-      <p>Nearest to farthest from 41-15 Queens Blvd.</p>
+      <p>Nearest to farthest from Maggie's.</p>
       <p style="font-size:13px;margin-top:4px"><span id="updated">Last updated: November 16, 2026</span></p>
     </div>
   </div>
@@ -157,7 +157,7 @@ const dtxt=v=>{const d=mi(v);return here?(d<10?d.toFixed(2):d.toFixed(0))+" mi f
 const gps=document.getElementById("gps"),gmsg=document.getElementById("gmsg");
 gps.addEventListener("click",()=>{
   if(here){here=null;gps.setAttribute("aria-pressed","false");gps.textContent="📍 Use my location";gmsg.hidden=true;render();return}
-  const fail=()=>{gmsg.hidden=false;gmsg.textContent="Your location isn't available here (check your browser's location permission). Still sorting from 41-15 Queens Blvd."};
+  const fail=()=>{gmsg.hidden=false;gmsg.textContent="Your location isn't available here (check your browser's location permission). Still sorting from Maggie's."};
   if(!navigator.geolocation){fail();return}
   gmsg.hidden=false;gmsg.textContent="Finding you…";
   try{navigator.geolocation.getCurrentPosition(p=>{here=[p.coords.latitude,p.coords.longitude];gps.setAttribute("aria-pressed","true");gps.textContent="📍 Using your location ✕";gmsg.hidden=true;render()},fail,{timeout:8000,maximumAge:300000})}catch(e){fail()}
@@ -169,7 +169,7 @@ function render(){
     (!st.now||s.k==="on")&&(!st.food||v.food)&&
     (!st.tables||v.seat==="all")&&(!st.bar||v.seat==="bar"));
   r.sort((a,b)=>mi(a.v)-mi(b.v)||a.v.n.localeCompare(b.v.n));
-  document.getElementById("count").textContent=r.length+" of "+V.length+" happy hours"+(st.now?" happening right now":"")+(here?" · nearest to you":" · nearest to farthest from 41-15 Queens Blvd");
+  document.getElementById("count").textContent=r.length+" of "+V.length+" happy hours"+(st.now?" happening right now":"")+(here?" · nearest to you":" · nearest to farthest from Maggie's");
   document.getElementById("list").innerHTML=r.length?r.map(({v,s})=>`
   <article class="card">
     <div class="top"><div><h2>${esc(v.n)}</h2><div class="hood"><span class="dist">${dtxt(v)}</span> · ${esc(v.h)}</div></div>
