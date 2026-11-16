@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1a1020">
+<meta name="color-scheme" content="dark">
+<title>Sunnyside Happy Hours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, neighborly, a little old-school — the corner-bar regular's tip sheet
+   IDEA: golden hour on Queens Blvd: the sun dropping behind the Manhattan skyline across the Sunnyside Yards, the 7 train rumbling overhead, the "Sunnyside" arch sign
+   PICTURE: sunset sky, the arch sign over Queens Blvd, elevated 7 track with a purple-striped train, Sunnyside Gardens brick rowhouses
+   COLOUR and TYPE: dusk plum ground, sun gold accent, Sunnyside Gardens brick, 7-line purple; Fraunces (old sign-painter feel) for headings, Inter for body
+   LAYOUT: sign + scene header, sticky filter bar, one column of cards (two above 900px), each with distance from 41-15 Queens Blvd */
+:root{color-scheme:dark;--bg:#140f18;--card:#1e1823;--ink:#f7f0e6;--mute:#b8acbb;--line:#34293b;--y:#ffb627;--o:#d9643a;--p:#b933ad;--g:#2f9e5b;--chip:#291f2f}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,"Helvetica Neue",Helvetica,Arial,sans-serif;overflow-x:clip}
+header{position:relative;background:#1a1020}
+.sign{background:linear-gradient(180deg,#24142b,#1a1020);border-top:5px solid var(--y)}
+.sign .in{max-width:1240px;margin:auto;padding:22px max(5vw,16px) 16px}
+.lines{display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:14px;color:#e9d9c4;font-weight:500}
+.bul{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 17px/1 Inter,Helvetica,Arial,sans-serif;background:var(--p);color:#fff}
+h1{font:700 clamp(34px,8.5vw,56px)/1.02 Fraunces,Georgia,serif;letter-spacing:-.01em;margin:0;color:#fff4dc;text-wrap:balance}
+h1 span{color:var(--y)}
+header p{margin:8px 0 0;max-width:56ch;font-size:15px;color:#e2d4c6}
+#updated{color:var(--y);font-weight:600}
+.sky{display:block;width:100%;height:clamp(120px,19vw,180px)}
+.bar{position:sticky;top:0;z-index:5;background:#1a1020;border-bottom:1px solid var(--line);padding:12px max(5vw,16px)}
+.bar .in{max-width:1240px;margin:auto;display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type=search]{font:16px Inter,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:999px;min-height:38px;padding:0 14px;flex:1 1 220px}
+.chip{font:600 14px Inter,Helvetica,Arial,sans-serif;min-height:38px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--chip);color:var(--ink);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--y);border-color:var(--y);color:#241406}
+:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+main{max-width:1240px;margin:auto;padding:18px max(5vw,16px) 40px}
+.count{color:var(--mute);font-size:14px;margin:0 0 12px}
+.list{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:900px){.list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--o);border-radius:10px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+h2{font:700 22px/1.15 Fraunces,Georgia,serif;margin:0;color:#fff4dc}
+.hood{font-size:13px;color:var(--mute)}
+.live{flex:none;font-size:13px;font-weight:700;white-space:nowrap;padding:4px 10px;border-radius:999px;background:var(--g);color:#fff}
+.live.soon{background:var(--y);color:#241406}
+.live.off{background:var(--chip);color:var(--mute);font-weight:600}
+.addr{color:var(--y);font-weight:500;text-decoration:none;font-size:15px}
+.addr:hover{text-decoration:underline}
+.gmap{display:inline-block;align-self:flex-start;margin:12px 0 0;padding:5px 10px;border:1px solid var(--y);border-radius:999px;color:var(--y);font-size:13px;font-weight:600;text-decoration:none}
+.gmap:active{opacity:.7}
+.when{font-size:15px;font-weight:600}
+.deal{margin:0;font-size:16px;color:#ece2d6}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:13px;padding:3px 9px;border-radius:999px;background:var(--chip);white-space:nowrap}
+.tag.y{background:transparent;border:1.5px solid var(--y);color:var(--y)}
+.tag.b{background:#33273a}
+.tag.u{background:transparent;border:1px dashed #4d4053;color:var(--mute)}
+.prices{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.prices li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-size:15px}
+.prices b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.src{font-size:13px;color:var(--mute)}
+.note{font-size:13px;color:var(--mute);margin:0}
+.dist{font-weight:700;color:var(--y)}
+.gmsg{margin:0;font-size:14px;color:var(--mute)}
+.empty{padding:40px 0;text-align:center;color:var(--mute)}
+footer{border-top:1px solid var(--line);padding:22px max(5vw,16px) 36px;color:var(--mute);font-size:14px;background:#1a1020}
+footer .in{max-width:1240px;margin:auto}
+footer a{color:var(--y)}
+@media(prefers-reduced-motion:no-preference){.card{animation:up .35s ease both}@keyframes up{from{opacity:0;transform:translateY(6px)}}.train{animation:ride 14s linear infinite}@keyframes ride{from{transform:translateX(-260px)}to{transform:translateX(1260px)}}}
+</style>
+</head>
+<body>
+<header>
+  <div class="sign">
+    <div class="in">
+      <div class="lines"><span class="bul" aria-label="7 train">7</span> 40th St · 46th St–Bliss St</div>
+      <h1>Happy Hours in <span>Sunnyside</span></h1>
+      <p>Nearest to farthest from 41-15 Queens Blvd.</p>
+      <p style="font-size:13px;margin-top:4px"><span id="updated">Last updated: November 16, 2026</span></p>
+    </div>
+  </div>
+  <svg class="sky" viewBox="0 0 1200 180" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs><linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1640"/><stop offset=".45" stop-color="#8a3b5c"/><stop offset=".75" stop-color="#e2733a"/><stop offset="1" stop-color="#ffb627"/></linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff2b8"/><stop offset=".6" stop-color="#ffcf4a"/><stop offset="1" stop-color="#ffb627" stop-opacity="0"/></radialGradient></defs>
+    <rect width="1200" height="180" fill="url(#dusk)"/>
+    <circle cx="760" cy="128" r="70" fill="url(#sun)"/><circle cx="760" cy="128" r="40" fill="#ffe08a"/>
+    <g fill="#4a2340" opacity=".85"><rect x="320" y="101" width="24" height="49"/><rect x="347" y="111" width="15" height="39"/><rect x="362" y="113" width="25" height="37"/><rect x="388" y="109" width="15" height="41"/><rect x="406" y="112" width="27" height="38"/><rect x="434" y="66" width="16" height="84"/><rect x="450" y="92" width="17" height="58"/><rect x="467" y="114" width="26" height="36"/><rect x="494" y="103" width="15" height="47"/><rect x="511" y="102" width="27" height="48"/><rect x="538" y="97" width="23" height="53"/><rect x="561" y="73" width="20" height="77"/><rect x="581" y="113" width="16" height="37"/><rect x="598" y="66" width="29" height="84"/><rect x="629" y="62" width="28" height="88"/><rect x="659" y="89" width="23" height="61"/><rect x="683" y="110" width="21" height="40"/><rect x="706" y="32" width="30" height="118"/><rect x="738" y="84" width="28" height="66"/><rect x="766" y="55" width="17" height="95"/><rect x="786" y="77" width="19" height="73"/><rect x="806" y="67" width="29" height="83"/><rect x="835" y="80" width="16" height="70"/><rect x="853" y="57" width="25" height="93"/><rect x="881" y="109" width="16" height="41"/><rect x="899" y="112" width="29" height="38"/><rect x="928" y="63" width="23" height="87"/><rect x="953" y="76" width="26" height="74"/><rect x="979" y="75" width="28" height="75"/><rect x="1008" y="57" width="17" height="93"/><rect x="1025" y="84" width="20" height="66"/><rect x="1046" y="70" width="21" height="80"/><rect x="1070" y="110" width="29" height="40"/><rect x="1100" y="69" width="28" height="81"/><rect x="1130" y="65" width="18" height="85"/><rect x="1150" y="75" width="27" height="75"/><rect x="1180" y="101" width="21" height="49"/></g>
+    <g stroke="#2a1630" stroke-width="5"><path d="M0 104 H1200"/></g>
+    <g fill="#2a1630"><rect x="40" y="104" width="7" height="50"/><rect x="160" y="104" width="7" height="50"/><rect x="280" y="104" width="7" height="50"/><rect x="400" y="104" width="7" height="50"/><rect x="520" y="104" width="7" height="50"/><rect x="640" y="104" width="7" height="50"/><rect x="760" y="104" width="7" height="50"/><rect x="880" y="104" width="7" height="50"/><rect x="1000" y="104" width="7" height="50"/><rect x="1120" y="104" width="7" height="50"/></g>
+    <g class="train"><rect x="0" y="86" width="230" height="16" rx="4" fill="#d9d4dc"/><rect x="0" y="95" width="230" height="3" fill="#b933ad"/><g fill="#5a4a63"><rect x="8" y="89" width="9" height="5"/><rect x="24" y="89" width="9" height="5"/><rect x="40" y="89" width="9" height="5"/><rect x="56" y="89" width="9" height="5"/><rect x="72" y="89" width="9" height="5"/><rect x="88" y="89" width="9" height="5"/><rect x="104" y="89" width="9" height="5"/><rect x="120" y="89" width="9" height="5"/><rect x="136" y="89" width="9" height="5"/><rect x="152" y="89" width="9" height="5"/><rect x="168" y="89" width="9" height="5"/><rect x="184" y="89" width="9" height="5"/><rect x="200" y="89" width="9" height="5"/><rect x="216" y="89" width="9" height="5"/></g><circle cx="222" cy="94" r="5" fill="#b933ad"/><text x="222" y="97" font-family="Inter,Arial" font-size="7" font-weight="700" fill="#fff" text-anchor="middle">7</text></g>
+    <g fill="#2a1630"><rect x="400" y="70" width="9" height="90"/><rect x="591" y="70" width="9" height="90"/><path d="M400 76 Q500 34 600 76 L600 86 Q500 46 400 86Z"/></g>
+    <rect x="436" y="56" width="128" height="19" rx="3" fill="#2a1630" stroke="#ffb627" stroke-width="1.5"/>
+    <text x="500" y="70" font-family="Fraunces,Georgia,serif" font-size="13" font-weight="700" fill="#ffd36b" text-anchor="middle" letter-spacing="2">SUNNYSIDE</text>
+    <g fill="#7a3324"><rect x="0" y="142" width="34" height="28"/><path d="M0 142 L17.0 134 L34 142Z"/><rect x="36" y="141" width="34" height="29"/><path d="M36 141 L53.0 133 L70 141Z"/><rect x="72" y="137" width="34" height="33"/><path d="M72 137 L89.0 129 L106 137Z"/><rect x="108" y="142" width="42" height="28"/><path d="M108 142 L129.0 134 L150 142Z"/><rect x="152" y="140" width="38" height="30"/><path d="M152 140 L171.0 132 L190 140Z"/><rect x="192" y="142" width="34" height="28"/><path d="M192 142 L209.0 134 L226 142Z"/><rect x="228" y="136" width="38" height="34"/><path d="M228 136 L247.0 128 L266 136Z"/><rect x="268" y="139" width="38" height="31"/><path d="M268 139 L287.0 131 L306 139Z"/><rect x="308" y="136" width="34" height="34"/><path d="M308 136 L325.0 128 L342 136Z"/><rect x="344" y="144" width="42" height="26"/><path d="M344 144 L365.0 136 L386 144Z"/><rect x="388" y="136" width="38" height="34"/><path d="M388 136 L407.0 128 L426 136Z"/><rect x="428" y="138" width="38" height="32"/><path d="M428 138 L447.0 130 L466 138Z"/><rect x="468" y="138" width="38" height="32"/><path d="M468 138 L487.0 130 L506 138Z"/><rect x="508" y="137" width="34" height="33"/><path d="M508 137 L525.0 129 L542 137Z"/><rect x="544" y="138" width="42" height="32"/><path d="M544 138 L565.0 130 L586 138Z"/><rect x="588" y="141" width="34" height="29"/><path d="M588 141 L605.0 133 L622 141Z"/><rect x="624" y="141" width="34" height="29"/><path d="M624 141 L641.0 133 L658 141Z"/><rect x="660" y="142" width="38" height="28"/><path d="M660 142 L679.0 134 L698 142Z"/><rect x="700" y="139" width="34" height="31"/><path d="M700 139 L717.0 131 L734 139Z"/><rect x="736" y="144" width="42" height="26"/><path d="M736 144 L757.0 136 L778 144Z"/><rect x="780" y="144" width="34" height="26"/><path d="M780 144 L797.0 136 L814 144Z"/><rect x="816" y="142" width="42" height="28"/><path d="M816 142 L837.0 134 L858 142Z"/><rect x="860" y="143" width="42" height="27"/><path d="M860 143 L881.0 135 L902 143Z"/><rect x="904" y="144" width="38" height="26"/><path d="M904 144 L923.0 136 L942 144Z"/><rect x="944" y="141" width="34" height="29"/><path d="M944 141 L961.0 133 L978 141Z"/><rect x="980" y="138" width="42" height="32"/><path d="M980 138 L1001.0 130 L1022 138Z"/><rect x="1024" y="140" width="34" height="30"/><path d="M1024 140 L1041.0 132 L1058 140Z"/><rect x="1060" y="139" width="38" height="31"/><path d="M1060 139 L1079.0 131 L1098 139Z"/><rect x="1100" y="143" width="38" height="27"/><path d="M1100 143 L1119.0 135 L1138 143Z"/><rect x="1140" y="137" width="34" height="33"/><path d="M1140 137 L1157.0 129 L1174 137Z"/><rect x="1176" y="137" width="38" height="33"/><path d="M1176 137 L1195.0 129 L1214 137Z"/></g>
+    <g fill="#ffcf6a" opacity=".8"><rect x="25" y="148" width="4" height="5"/><rect x="139" y="158" width="4" height="5"/><rect x="158" y="158" width="4" height="5"/><rect x="196" y="158" width="4" height="5"/><rect x="215" y="158" width="4" height="5"/><rect x="272" y="154" width="4" height="5"/><rect x="310" y="148" width="4" height="5"/><rect x="367" y="148" width="4" height="5"/><rect x="443" y="148" width="4" height="5"/><rect x="500" y="158" width="4" height="5"/><rect x="614" y="158" width="4" height="5"/><rect x="652" y="158" width="4" height="5"/><rect x="709" y="148" width="4" height="5"/><rect x="728" y="154" width="4" height="5"/><rect x="747" y="148" width="4" height="5"/><rect x="823" y="158" width="4" height="5"/><rect x="842" y="158" width="4" height="5"/><rect x="861" y="158" width="4" height="5"/><rect x="880" y="154" width="4" height="5"/><rect x="956" y="158" width="4" height="5"/><rect x="975" y="158" width="4" height="5"/><rect x="994" y="154" width="4" height="5"/><rect x="1032" y="148" width="4" height="5"/><rect x="1051" y="148" width="4" height="5"/><rect x="1070" y="158" width="4" height="5"/><rect x="1127" y="158" width="4" height="5"/><rect x="1184" y="158" width="4" height="5"/></g>
+  </svg>
+</header>
+
+<div class="bar"><div class="in">
+  <div class="row">
+    <input id="q" type="search" placeholder="Search name, street, margaritas, oysters…" aria-label="Search happy hours">
+    <button class="chip" id="gps" aria-pressed="false">📍 Use my location</button>
+    <button class="chip" id="fNow" aria-pressed="false">On now</button>
+    <button class="chip" id="fFood" aria-pressed="false">Food deals</button>
+  </div>
+  <p class="gmsg" id="gmsg" hidden></p>
+</div></div>
+
+<main>
+  <p class="count" id="count"></p>
+  <div class="list" id="list"></div>
+</main>
+
+<footer><div class="in">
+  <p><b>Distances</b> are straight-line miles from 41-15 Queens Blvd (Maggie Mae's, by the 40th St–Lowery St station).</p>
+  <p><b>Check before you go.</b> Happy hours change often. Every listing shows where its details came from and when. "Seating not confirmed" means no source said whether the deal is bar-only — ask your bartender.</p>
+  <p>Sources: <a href="https://happy-hour.nyc/queens/sunnyside-happy-hour">Happy Hour NYC (checked June–Nov 2026)</a> · <a href="https://5pm.nyc/best-happy-hours-queens/">5pm.nyc verified happy hours (2026)</a></p>
+</div></footer>
+
+<script>
+{
+const ALL=[0,1,2,3,4,5,6],WK=[1,2,3,4,5],MT=[1,2,3,4],FS=[5,6,0];
+const S={hhn:"Happy Hour NYC, checked 2026",p5:"5pm.nyc, verified happy hour, 2026",both:"5pm.nyc verified + Happy Hour NYC, 2026"};
+const gm=v=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(v.n+", "+v.a);
+// seat: bar = bar-only / the venue is a bar; all = bar & tables; ? = not confirmed
+const V=[
+{n:"Maggie Mae's",h:"Queens Blvd",a:"41-15 Queens Blvd, Sunnyside, NY 11104",g:[40.7440,-73.92292],t:[[[1,2,3],16,18],[[4],15,18],[[5],12,18]],d:"Big, friendly Irish pub right under the 7 at 40th St, with a back room and lots of TVs.",food:0,seat:"?",p:[["Select cocktails (normally $11–$12)","$2 off"]],s:"hhn",x:"Other listings show Mon–Thu 3–6pm or daily 3–6pm — call ahead.",ok:"Open — checked Oct 2026"},
+{n:"Brookside Market Café & Bistro",h:"Queens Blvd",a:"43-15 Queens Blvd, Sunnyside, NY 11104",g:[40.74378,-73.92075],t:[[[3,4,5],17,19]],d:"Coffee shop by day, wine bar and bistro by night, with a hidden back patio.",food:null,seat:"?",sn:"Back patio",p:[["Happy hour prices","Not posted"]],s:"hhn",ok:"Open — checked Nov 2026"},
+{n:"Ida's Nearabout",h:"Queens Blvd",a:"43-13 Queens Blvd, Sunnyside, NY 11104",g:[40.743775,-73.92084],t:[[WK,12,18]],d:"Cozy neighborhood bar with a back patio, next door to Brookside Market.",food:0,seat:"?",sn:"Back patio",p:[["Radeberger","$6"],["Guinness","$7"],["House margarita","$9"],["Wine","$10"],["Ginger mule","$10"]],s:"hhn",x:"5pm.nyc lists a Monday-only version ($6 drafts, $9 wells, $7 wine) — prices may vary.",ok:"Open — checked June 2026"},
+{n:"Sweet Avenue",h:"Queens Blvd",a:"40-05 Queens Blvd, Sunnyside, NY 11104",g:[40.744124,-73.923926],t:[[WK,16,19]],d:"Bar and restaurant across from the 40th St station with weekday drink discounts.",food:0,seat:"?",p:[["Cocktails, wine & select drafts","$2 off"]],s:"p5",x:"Happy hour starts when it opens (time varies); shown from 4pm.",ok:"Open — 5pm.nyc verified, 2026"},
+{n:"The Courtyard Ale House",h:"Queens Blvd",a:"40-18 Queens Blvd, Sunnyside, NY 11104",g:[40.74329,-73.92374],t:[[ALL,11,19]],d:"Laid-back ale house with a beer garden and an all-day happy hour every day.",food:0,seat:"?",sn:"Beer garden",p:[["Select drafts","$5"],["Mixed drinks","$5"],["House wines","$5"]],s:"both",ok:"Open — checked Oct 2026"},
+{n:"The Lowery Bar & Kitchen",h:"43rd Ave",a:"43-02 43rd Ave, Sunnyside, NY 11104",g:[40.744976,-73.920666],t:[[WK,15,18]],d:"Neighborhood bar and kitchen with cheap beer, spritzes and bar bites.",food:1,seat:"?",p:[["Narragansett","$4"],["Sangria","$8"],["Aperol spritz","$10"],["Moscow mule","$10"],["Bar bites","$10–$12"]],s:"p5",ok:"Open — 5pm.nyc verified, 2026"},
+{n:"McGuinness's Saloon",h:"Queens Blvd",a:"44-23 Queens Blvd, Sunnyside, NY 11104",g:[40.743593,-73.919702],t:[[ALL,11,19]],d:"Old-school Irish saloon open until 4am, with an all-day happy hour.",food:0,seat:"?",p:[["Select drafts","$5"],["Mixed drinks","$5"],["House wines","$5"]],s:"hhn",ok:"Open — checked June 2026"},
+{n:"Bliss 46 Bistro",h:"46th St",a:"43-46 46th St, Sunnyside, NY 11104",g:[40.7449,-73.9180],t:[[ALL,16,18]],d:"Cozy bistro near the 46th St–Bliss St station with a daily early-evening deal.",food:0,seat:"?",p:[["Beer","$4.50"],["Wine","$6.50"],["Wine bottles","10% off"]],s:"hhn",ok:"Open — checked June 2026"},
+{n:"The Skillman",h:"Skillman Ave",a:"45-20 Skillman Ave, Sunnyside, NY 11104",g:[40.746403,-73.918193],t:[[WK,12,18]],d:"Restaurant and bar on Skillman Ave with a weekday happy hour.",food:null,seat:"?",p:[["Happy hour prices","Not posted"]],s:"hhn",x:"Atly says 4–6pm on weekdays — call ahead.",ok:"Open — checked Nov 2026"},
+{n:"Claret Wine Bar",h:"Skillman Ave",a:"46-02 Skillman Ave, Sunnyside, NY 11104",g:[40.746397,-73.917871],t:[[WK,16,18],[[6,0],14,17]],d:"Intimate wine bar with a bottle-and-food happy hour deal, weekends too.",food:1,seat:"?",p:[["Bottle of house wine + margherita pizza or cheese/charcuterie platter","$32"]],s:"p5",ok:"Open — 5pm.nyc verified, 2026"},
+{n:"Sanger Hall",h:"Skillman Ave",a:"48-20 Skillman Ave, Sunnyside, NY 11104",g:[40.74615,-73.915413],t:[[WK,16,20]],d:"Roomy bar and restaurant with a long weekday happy hour.",food:0,seat:"?",p:[["Select beers","$5"],["Rosé","$7"],["Well drinks","$8"],["Margaritas","$10"]],s:"p5",ok:"Open — 5pm.nyc verified, 2026"},
+{n:"Cousin Larry's",h:"Skillman Ave",a:"49-02 Skillman Ave, Sunnyside, NY 11104",g:[40.746088,-73.915118],t:[[[1,2,3],16,19],[[4,5],14,19]],d:"Neighborhood bar with a weekly cocktail special and half-price wine bottles midweek.",food:0,seat:"?",p:[["Cocktail of the week","$6"],["Wine bottles (Tue & Wed)","50% off"]],s:"both",x:"5pm.nyc lists Mon–Fri 4–7pm; Happy Hour NYC (Oct 2026) shows Thu–Fri starting at 2pm.",ok:"Open — checked Oct 2026"}
+];
+const C=[40.7440,-73.92292];
+const DN=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const fmt=h=>{const m=Math.round((h%1)*60),H=Math.floor(h),ap=H>=12?"pm":"am",h12=(H%12)||12;return h12+(m?":"+String(m).padStart(2,"0"):"")+ap};
+const days=a=>{const k=a.join();if(a.length===7)return"Daily";if(k==="1,2,3,4,5")return"Mon–Fri";if(k==="1,2,3,4")return"Mon–Thu";if(k==="5,6,0")return"Fri–Sun";return a.length===1?DN[a[0]]:DN[a[0]]+"–"+DN[a[a.length-1]]};
+const when=v=>!v.t.length?"Happy hour times not posted":v.t.map(([d,s,e])=>days(d)+" "+fmt(s)+"–"+fmt(e)).join(" · ");
+function nowMB(){try{const p=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",weekday:"short",hour:"numeric",minute:"numeric",hour12:false}).formatToParts(new Date());const g=k=>p.find(x=>x.type===k).value;return{d:DN.indexOf(g("weekday")),h:(+g("hour")%24)+(+g("minute"))/60}}catch(e){const n=new Date();return{d:n.getDay(),h:n.getHours()+n.getMinutes()/60}}}
+function status(v){const n=nowMB();for(const[d,s,e]of v.t){if(d.includes(n.d)&&n.h>=s&&n.h<e)return{k:"on",txt:"On now · until "+fmt(e),r:e-n.h}}
+for(let k=0;k<8;k++){const dd=(n.d+k)%7;let best=null;for(const[d,s]of v.t){if(d.includes(dd)&&(k>0||s>n.h)&&(best===null||s<best))best=s}
+if(best!==null){const wait=k*24+best-n.h;const lab=k===0?"Starts "+fmt(best):k===1?"Tomorrow "+fmt(best):DN[dd]+" "+fmt(best);return{k:wait<=2?"soon":"off",txt:lab,r:10+wait}}}
+return{k:"off",txt:"Check times",r:999}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const seatTag=v=>v.seat==="bar"?'<span class="tag b">Bar seating</span>':v.seat==="all"?'<span class="tag b">Bar &amp; tables</span>':'<span class="tag u">Seating not confirmed</span>';
+const st={q:"",now:false,food:false,tables:false,bar:false};
+let here=null;
+const mi=v=>{const c=here||C,R=3958.8,r=x=>x*Math.PI/180,dLa=r(v.g[0]-c[0]),dLo=r(v.g[1]-c[1]);const a=Math.sin(dLa/2)**2+Math.cos(r(c[0]))*Math.cos(r(v.g[0]))*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(a))};
+const dtxt=v=>{const d=mi(v);return here?(d<10?d.toFixed(2):d.toFixed(0))+" mi from you":d<0.03?"Center point":d.toFixed(2)+" mi"};
+const gps=document.getElementById("gps"),gmsg=document.getElementById("gmsg");
+gps.addEventListener("click",()=>{
+  if(here){here=null;gps.setAttribute("aria-pressed","false");gps.textContent="📍 Use my location";gmsg.hidden=true;render();return}
+  const fail=()=>{gmsg.hidden=false;gmsg.textContent="Your location isn't available here (check your browser's location permission). Still sorting from 41-15 Queens Blvd."};
+  if(!navigator.geolocation){fail();return}
+  gmsg.hidden=false;gmsg.textContent="Finding you…";
+  try{navigator.geolocation.getCurrentPosition(p=>{here=[p.coords.latitude,p.coords.longitude];gps.setAttribute("aria-pressed","true");gps.textContent="📍 Using your location ✕";gmsg.hidden=true;render()},fail,{timeout:8000,maximumAge:300000})}catch(e){fail()}
+});
+function render(){
+  const q=st.q.trim().toLowerCase();
+  let r=V.map(v=>({v,s:status(v)})).filter(({v,s})=>
+    (!q||(v.n+" "+v.a+" "+v.d+" "+v.p.map(x=>x[0]).join(" ")).toLowerCase().includes(q))&&
+    (!st.now||s.k==="on")&&(!st.food||v.food)&&
+    (!st.tables||v.seat==="all")&&(!st.bar||v.seat==="bar"));
+  r.sort((a,b)=>mi(a.v)-mi(b.v)||a.v.n.localeCompare(b.v.n));
+  document.getElementById("count").textContent=r.length+" of "+V.length+" happy hours"+(st.now?" happening right now":"")+(here?" · nearest to you":" · nearest to farthest from 41-15 Queens Blvd");
+  document.getElementById("list").innerHTML=r.length?r.map(({v,s})=>`
+  <article class="card">
+    <div class="top"><div><h2>${esc(v.n)}</h2><div class="hood"><span class="dist">${dtxt(v)}</span> · ${esc(v.h)}</div></div>
+      <span class="live ${s.k==="on"?"":s.k==="soon"?"soon":"off"}">${esc(s.txt)}</span></div>
+    <a class="addr" href="${gm(v)}" target="_blank" rel="noopener">${esc(v.a)}</a>
+    <div class="when">${esc(when(v))}</div>
+    ${v.y?`<a class="yelp" href="https://www.yelp.com/biz/${v.y[2]}" rel="noopener">★ ${v.y[0].toFixed(1)} on Yelp · ${v.y[1].toLocaleString()} reviews</a>`:""}
+    <p class="deal">${esc(v.d)}</p>
+    <div class="tags">${v.food===null?'<span class="tag u">Food deal not confirmed</span>':v.food?'<span class="tag y">Food included</span>':'<span class="tag">Drinks only</span>'}${seatTag(v)}${v.sn?`<span class="tag">${esc(v.sn)}</span>`:""}</div>
+    <ul class="prices">${v.p.map(([i,p])=>`<li><span>${esc(i)}</span><b>${esc(p)}</b></li>`).join("")}</ul>
+    ${v.fn?`<p class="note">${esc(v.fn)}</p>`:""}${v.x?`<p class="note">${esc(v.x)}</p>`:""}
+    <div class="src">${esc(v.ok)} · Deal source: ${esc(S[v.s])}</div>
+    <a class="gmap" href="${gm(v)}" target="_blank" rel="noopener">📍 Open in Google Maps</a>
+  </article>`).join(""):'<div class="empty">No happy hours match. Try clearing a filter.</div>';
+}
+const tg=(id,k)=>document.getElementById(id).addEventListener("click",e=>{st[k]=!st[k];e.currentTarget.setAttribute("aria-pressed",st[k]);if(k==="tables"&&st.tables){st.bar=false;document.getElementById("fBar").setAttribute("aria-pressed","false")}if(k==="bar"&&st.bar){st.tables=false;document.getElementById("fTables").setAttribute("aria-pressed","false")}render()});
+tg("fFood","food");tg("fNow","now");
+document.getElementById("q").addEventListener("input",e=>{st.q=e.target.value;render()});
+render();setInterval(render,60000);
+}
+</script>
+</body>
+</html>
