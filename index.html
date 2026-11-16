@@ -114,7 +114,7 @@ footer a{color:var(--y)}
 
 <footer><div class="in">
   <p><b>Distances</b> are straight-line miles from 41-15 Queens Blvd (Maggie Mae's, by the 40th St–Lowery St station).</p>
-  <p><b>Check before you go.</b> Happy hours change often. Every listing shows where its details came from and when. "Seating not confirmed" means no source said whether the deal is bar-only — ask your bartender.</p>
+  <p><b>Check before you go.</b> Happy hours change often. "Seating not confirmed" means no source said whether the deal is bar-only — ask your bartender.</p>
   <p>Sources: <a href="https://happy-hour.nyc/queens/sunnyside-happy-hour">Happy Hour NYC (checked June–Nov 2026)</a> · <a href="https://5pm.nyc/best-happy-hours-queens/">5pm.nyc verified happy hours (2026)</a></p>
 </div></footer>
 
@@ -184,7 +184,6 @@ function render(){
     <div class="tags">${v.food===null?'<span class="tag u">Food deal not confirmed</span>':v.food?'<span class="tag y">Food included</span>':'<span class="tag">Drinks only</span>'}${seatTag(v)}${v.sn?`<span class="tag">${esc(v.sn)}</span>`:""}</div>
     <ul class="prices">${v.p.map(([i,p])=>`<li><span>${esc(i)}</span><b>${esc(p)}</b></li>`).join("")}</ul>
     ${v.fn?`<p class="note">${esc(v.fn)}</p>`:""}${v.x?`<p class="note">${esc(v.x)}</p>`:""}
-    <div class="src">${esc(v.ok)} · Deal source: ${esc(S[v.s])}</div>
     <a class="gmap" href="${gm(v)}" target="_blank" rel="noopener">📍 Open in Google Maps</a>
   </article>`).join(""):'<div class="empty">No happy hours match. Try clearing a filter.</div>';
 }
